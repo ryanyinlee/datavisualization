@@ -13,8 +13,13 @@ class RandomWalk:
     def create_walks(self):
         """Randomly creates the walkpoints and fills the lists in init"""
         while len(self.xvals) < self.numpoints:
-            xsteps = self.get_steps()
-            ysteps = self.get_steps()
+            xdirection = choice([1, -1, 0])
+            xdistance = choice([0,1,2,3,4,5,6,7,8,9])
+            xsteps = xdistance * xdirection
+
+            ydirection = choice([1,-1])
+            ydistance = choice([0,1,2,3,4])
+            ysteps = ydistance * ydirection
 
             if xsteps == 0 and ysteps == 0:
                 continue
@@ -24,15 +29,4 @@ class RandomWalk:
             
             self.xvals.append(x)
             self.yvals.append(y)
-    
-    def get_steps(self):
-        """Determine direction and distance for each step"""
-       
-        direction = choice([1,-1])
-        distance = choice([0,1,2,3,4])
-        steps = distance * direction
-        return steps
-            
-        
-
 

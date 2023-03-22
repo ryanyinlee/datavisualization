@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
-from randomwalk import RandomWalk
-#from randomwalkmod import RandomWalk
 
+#from randomwalk import RandomWalk
+from randomwalkmod import RandomWalk
 
 rw = RandomWalk()
 rw.create_walks()
@@ -12,7 +12,7 @@ fig, ax = plt.subplots(figsize=(14,8), dpi = 128)
 
 point_nums = range(rw.numpoints)
 
-ax.scatter(rw.xvals, rw.yvals, c=point_nums, cmap=plt.cm.Blues, edgecolors='none', s=10)
+ax.plot(rw.xvals, rw.yvals, linewidth = 1)
 
 ax.scatter(0, 0, c='green', edgecolors='none', s=50)
 ax.scatter(rw.xvals[-1], rw.yvals[-1], c='red', edgecolors='none', s=50)
