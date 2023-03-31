@@ -5,22 +5,26 @@ import matplotlib.pyplot as plt
 from datetime import datetime
 
 
-filename = 'data/sitka_weather_2018_simple.csv'
+filename = 'data/death_valley_2018_simple.csv'
+filename= 'data/sitka_weather_2018_simple.csv'
 
 with open(filename) as f:
     reader = csv.reader(f)
     headerrow = next(reader)
-    print(headerrow)
     highs = []
     dates = []
     lows = []
     for row in reader:
         current_date = datetime.strptime(row[2], '%Y-%m-%d')
-        high = int(row[5])
-        low = int(row[6])
-        dates.append(current_date)
-        highs.append(high)
-        lows.append(low)
+        try:
+            high = int(row[headerrow.index('TMAX')])
+            low = int(row[headerrow.index('TMIN')])
+        except:
+            print(f"Missing data for {current_date}")
+        else:
+            dates.append(current_date)
+            highs.append(high)
+            lows.append(low)
 
 plt.style.use('seaborn')
 
@@ -29,7 +33,13 @@ ax.plot(dates, highs, c='red')
 ax.plot(dates, lows, c='blue')
 ax.fill_between(dates, highs, lows, facecolor='blue', alpha=0.1)
 
-ax.set_title('Daily Highs & Lows, 2018', fontsize = 24)
+
+nameindex = headerrow.index('NAME')
+
+date = headerrow.index('DATE')
+year = row[date].split('-')[0]
+
+ax.set_title(f'Highs & Lows, {row[nameindex]}, {year}', fontsize = 24)
 ax.set_xlabel('', fontsize = 16)
 fig.autofmt_xdate()
 ax.set_ylabel('Temp (F)', fontsize = 16)
